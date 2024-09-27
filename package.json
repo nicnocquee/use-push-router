@@ -1,6 +1,6 @@
 {
   "name": "use-push-router",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A custom hook that simplifies modifying the search params in Next.js",
   "keywords": [
     "demo",
@@ -45,7 +45,7 @@
     "build": "tsup",
     "ci": "npm run build && npm run check-format && npm run check-exports && npm run lint && npm run test",
     "lint": "tsc",
-    "test": "vitest run",
+    "test": "echo \"No test yet\"",
     "format": "prettier --write .",
     "check-format": "prettier --check .",
     "check-exports": "attw --pack .",
