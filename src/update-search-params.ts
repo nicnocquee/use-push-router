@@ -15,6 +15,29 @@ export const updateSearchParams =
         }
       });
     }
-    // ... rest of the function
+    if ('remove' in params && params.remove) {
+      Object.entries(params.remove).forEach(([key, value]) => {
+        if (typeof value === 'undefined') {
+          newSearchParams.delete(key);
+        } else if (Array.isArray(value)) {
+          value.forEach((v) => {
+            newSearchParams.delete(key, v);
+          });
+        } else {
+          newSearchParams.delete(key, value);
+        }
+      });
+    }
+    if ('set' in params && params.set) {
+      Object.entries(params.set).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+          value.forEach((v) => {
+            newSearchParams.set(key, v);
+          });
+        } else {
+          newSearchParams.set(key, value);
+        }
+      });
+    }
     return newSearchParams;
   };

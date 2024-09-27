@@ -1,6 +1,6 @@
 {
   "name": "use-push-router",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A custom hook that simplifies modifying the search params in Next.js",
   "keywords": [
     "demo",
