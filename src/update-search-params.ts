@@ -30,9 +30,10 @@ export const updateSearchParams =
     }
     if ('set' in params && params.set) {
       Object.entries(params.set).forEach(([key, value]) => {
+        newSearchParams.delete(key);
         if (Array.isArray(value)) {
           value.forEach((v) => {
-            newSearchParams.set(key, v);
+            newSearchParams.append(key, v);
           });
         } else {
           newSearchParams.set(key, value);
