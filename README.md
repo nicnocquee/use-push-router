@@ -47,7 +47,10 @@ const Component = () => {
 };
 ```
 
-Adding a search param with the same key will result in an array of values. For example, current URL is `https://example.com/?foo=bar`, and we add `foo=qux` to the search params, the URL will be `https://example.com/?foo=bar&foo=qux`.
+Therea are two ways to add parameters to the URL:
+
+1. Specify a key-value pair to add a specific parameter value: `foo: 'bar'`. After calling this function, `foo=bar` will be added to the URL. If there is already a value for foo, for example `https://example.com/?foo=bar`, it will become `https://example.com/?foo=bar&foo=qux` after calling this function.
+2. Use an array to add multiple values for the same parameter: `baz: ['qux', 'quux']`. After calling this function, `baz=qux&baz=quux` will be added to the URL.
 
 ### Setting search params
 
@@ -61,7 +64,7 @@ const Component = () => {
     pushSearchParams({
       set: {
         foo: 'bar', // sets foo=bar in the search params. If there is already a value for foo, it will be overwritten.
-        baz: 'qux', // sets baz=qux in the search params.
+        baz: ['qux', 'quux'], // sets baz=qux&baz=quux in the search params.
       },
     });
   };
@@ -70,7 +73,10 @@ const Component = () => {
 };
 ```
 
-If there is already a value for a search param, it will be overwritten. For example, current URL is `https://example.com/?foo=bar&foo=qux`, and we set `foo=quux` in the search params, the URL will be `https://example.com/?foo=quux`.
+There are two ways to set parameters in the URL:
+
+1. Specify a key-value pair to set a specific parameter value: `foo: 'bar'`. After calling this function, `foo=bar` will be set in the URL. If there is already a value for `foo`, for example `https://example.com/?foo=qux`, it will become `https://example.com/?foo=bar` after calling this function.
+2. Use an array to set multiple values for the same parameter: `baz: ['qux', 'quux']`. After calling this function, `baz=qux&baz=quux` will be set in the URL and replace any existing values for `baz`.
 
 ### Removing search params
 
@@ -94,9 +100,11 @@ const Component = () => {
 };
 ```
 
-Removing a search param with the same key will result in an array of values. For example, current URL is `https://example.com/?foo=bar&foo=qux`, and we remove `foo=qux` from the search params, the URL will be `https://example.com/?foo=bar`.
+You can remove parameters in three ways:
 
-However if the value is `undefined`, the search param will be removed. For example, calling `pushSearchParams({ remove: { foo: undefined } })` will remove all values for `foo` from the search params.
+1. Specify a key-value pair to remove a specific parameter value: `foo: 'bar'`. After calling this function, `foo=bar` will be removed from the URL if it exists.
+2. Use an array to remove multiple values for the same parameter: `baz: ['qux', 'quux']`. After calling this function, `baz=qux&baz=quux` will be removed from the URL if they exist.
+3. Set a parameter to `undefined` to remove it entirely: `qux: undefined`. After calling this function, `qux` will be removed from the URL if it exists.
 
 ## License
 
