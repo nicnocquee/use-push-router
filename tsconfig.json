@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "module": "commonjs",
-    "lib": ["dom", "es6", "es2017", "esnext.asynciterable"],
+    "lib": ["dom", "ES2020"],
+    "module": "esnext",
+    "moduleResolution": "Bundler",
     "skipLibCheck": true,
     "sourceMap": true,
     "outDir": "./dist",
-    "moduleResolution": "node",
     "removeComments": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
