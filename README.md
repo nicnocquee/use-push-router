@@ -8,6 +8,10 @@ A custom hook that simplifies modifying the search params in Next.js and navigat
 npm i use-push-router
 ```
 
+## Demo
+
+[Check out the demo here.](https://playground.nico.fyi/search-params)
+
 ## Usage
 
 ```tsx
