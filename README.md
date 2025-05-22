@@ -18,7 +18,7 @@ const { pushSearchParams } = usePushRoute();
 
 The `pushSearchParams` function takes an object with the following shape:
 
-```ts
+```typescript
 {
   add?: Record<string, string | string[]>;
   remove?: Record<string, string | string[] | undefined>;
