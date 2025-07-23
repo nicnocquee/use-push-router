@@ -163,4 +163,4 @@ MIT
 
 ## Author
 
-Nico Prananta. Website: https://nico.fyi. Twitter: https://twitter.com/2co_p
+Nico Prananta. Website: https://nico.fyi. Bluesky: [@nico.fyi](https://bsky.app/profile/nico.fyi)
