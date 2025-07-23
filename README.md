@@ -1,6 +1,6 @@
 # use-push-router
 
-A custom hook that simplifies modifying the search params in Next.js App Router and navigates to the new URL.
+A custom hook that simplifies modifying the search params in **Next.js App Router** and navigates to the new URL.
 
 ## Installation
 
@@ -32,6 +32,8 @@ The `pushSearchParams` function takes an object with the following shape:
 
 ### Adding search params
 
+Adding search params is adding a new parameter to the URL. If the parameter already exists, it will be added as an array of values.
+
 ```tsx
 import { usePushRoute } from 'use-push-router';
 
@@ -51,12 +53,28 @@ const Component = () => {
 };
 ```
 
-Therea are two ways to add parameters to the URL:
+There are two ways to add parameters to the URL:
 
-1. Specify a key-value pair to add a specific parameter value: `foo: 'bar'`. After calling this function, `foo=bar` will be added to the URL. If there is already a value for foo, for example `https://example.com/?foo=bar`, it will become `https://example.com/?foo=bar&foo=qux` after calling this function.
-2. Use an array to add multiple values for the same parameter: `baz: ['qux', 'quux']`. After calling this function, `baz=qux&baz=quux` will be added to the URL.
+| Method                                     | Example                | Result                                                                                                                         |
+| ------------------------------------------ | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| Add a specific parameter value             | `foo: 'bar'`           | Adds `foo=bar` to the URL. If there is already a value for `foo`, it will become an array of values (e.g., `foo=bar&foo=qux`). |
+| Add multiple values for the same parameter | `baz: ['qux', 'quux']` | Adds `baz=qux&baz=quux` to the URL.                                                                                            |
+
+Here are some examples of how the add action modifies the URL:
+
+| Previous URL              | Add Action                               | Resulting URL                                        |
+| ------------------------- | ---------------------------------------- | ---------------------------------------------------- |
+| `/search`                 | `{ foo: 'bar' }`                         | `/search?foo=bar`                                    |
+| `/search?foo=bar`         | `{ foo: 'baz' }`                         | `/search?foo=bar&foo=baz`                            |
+| `/search?foo=bar`         | `{ foo: ['baz', 'qux'] }`                | `/search?foo=bar&foo=baz&foo=qux`                    |
+| `/search?foo=bar&baz=qux` | `{ baz: 'quux' }`                        | `/search?foo=bar&baz=qux&baz=quux`                   |
+| `/search?foo=bar`         | `{ foo: ['baz'], baz: 'qux' }`           | `/search?foo=bar&foo=baz&baz=qux`                    |
+| `/search?foo=bar&foo=baz` | `{ foo: 'qux' }`                         | `/search?foo=bar&foo=baz&foo=qux`                    |
+| `/search?foo=bar&baz=qux` | `{ foo: 'baz', baz: ['quux', 'corge'] }` | `/search?foo=bar&foo=baz&baz=qux&baz=quux&baz=corge` |
 
 ### Setting search params
+
+Setting search params is overwriting the existing parameter values with the new values. If the parameter is not present in the URL, it will be added.
 
 ```tsx
 import { usePushRoute } from 'use-push-router';
@@ -79,8 +97,22 @@ const Component = () => {
 
 There are two ways to set parameters in the URL:
 
-1. Specify a key-value pair to set a specific parameter value: `foo: 'bar'`. After calling this function, `foo=bar` will be set in the URL. If there is already a value for `foo`, for example `https://example.com/?foo=qux`, it will become `https://example.com/?foo=bar` after calling this function.
-2. Use an array to set multiple values for the same parameter: `baz: ['qux', 'quux']`. After calling this function, `baz=qux&baz=quux` will be set in the URL and replace any existing values for `baz`.
+| Method                                     | Example                | Result                                                                                    |
+| ------------------------------------------ | ---------------------- | ----------------------------------------------------------------------------------------- |
+| Set a specific parameter value             | `foo: 'bar'`           | Sets `foo=bar` in the URL. If there is already a value for `foo`, it will be overwritten. |
+| Set multiple values for the same parameter | `baz: ['qux', 'quux']` | Sets `baz=qux&baz=quux` in the URL and replaces any existing values for `baz`.            |
+
+Here are some examples of how the set action modifies the URL:
+
+| Previous URL              | Set Action                               | Resulting URL                        |
+| ------------------------- | ---------------------------------------- | ------------------------------------ |
+| `/search`                 | `{ foo: 'bar' }`                         | `/search?foo=bar`                    |
+| `/search?foo=bar`         | `{ foo: 'baz' }`                         | `/search?foo=baz`                    |
+| `/search?foo=bar`         | `{ foo: ['baz', 'qux'] }`                | `/search?foo=baz&foo=qux`            |
+| `/search?foo=bar&baz=qux` | `{ baz: 'quux' }`                        | `/search?foo=bar&baz=quux`           |
+| `/search?foo=bar`         | `{ foo: ['baz'], baz: 'qux' }`           | `/search?foo=baz&baz=qux`            |
+| `/search?foo=bar&foo=baz` | `{ foo: 'qux' }`                         | `/search?foo=qux`                    |
+| `/search?foo=bar&baz=qux` | `{ foo: 'baz', baz: ['quux', 'corge'] }` | `/search?foo=baz&baz=quux&baz=corge` |
 
 ### Removing search params
 
@@ -106,9 +138,24 @@ const Component = () => {
 
 You can remove parameters in three ways:
 
-1. Specify a key-value pair to remove a specific parameter value: `foo: 'bar'`. After calling this function, `foo=bar` will be removed from the URL if it exists.
-2. Use an array to remove multiple values for the same parameter: `baz: ['qux', 'quux']`. After calling this function, `baz=qux&baz=quux` will be removed from the URL if they exist.
-3. Set a parameter to `undefined` to remove it entirely: `qux: undefined`. After calling this function, `qux` will be removed from the URL if it exists.
+| Method                                        | Example                | Result                                                 |
+| --------------------------------------------- | ---------------------- | ------------------------------------------------------ |
+| Remove a specific parameter value             | `foo: 'bar'`           | Removes `foo=bar` from the URL if it exists.           |
+| Remove multiple values for the same parameter | `baz: ['qux', 'quux']` | Removes `baz=qux&baz=quux` from the URL if they exist. |
+| Remove a parameter entirely                   | `qux: undefined`       | Removes `qux` from the URL if it exists.               |
+
+Here are some examples of how the remove action modifies the URL:
+
+| Previous URL                       | Remove Action                    | Resulting URL             |
+| ---------------------------------- | -------------------------------- | ------------------------- |
+| `/search?foo=bar`                  | `{ foo: 'bar' }`                 | `/search`                 |
+| `/search?foo=bar&foo=baz`          | `{ foo: 'bar' }`                 | `/search?foo=baz`         |
+| `/search?foo=bar&foo=baz`          | `{ foo: ['bar', 'baz'] }`        | `/search`                 |
+| `/search?foo=bar&baz=qux`          | `{ baz: 'qux' }`                 | `/search?foo=bar`         |
+| `/search?foo=bar&baz=qux&baz=quux` | `{ baz: ['qux', 'quux'] }`       | `/search?foo=bar`         |
+| `/search?foo=bar&baz=qux`          | `{ foo: 'bar', baz: 'qux' }`     | `/search`                 |
+| `/search?foo=bar&baz=qux&qux=quux` | `{ qux: undefined }`             | `/search?foo=bar&baz=qux` |
+| `/search?foo=bar&baz=qux&qux=quux` | `{ foo: 'bar', qux: undefined }` | `/search?baz=qux`         |
 
 ## License
 
