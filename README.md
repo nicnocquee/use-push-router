@@ -1,6 +1,6 @@
 # use-push-router
 
-A custom hook that simplifies modifying the search params in Next.js and navigates to the new URL.
+A custom hook that simplifies modifying the search params in Next.js App Router and navigates to the new URL.
 
 ## Installation
 
